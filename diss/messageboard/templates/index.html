@@ -1,0 +1,88 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400&display=swap" rel="stylesheet">
+    <title>Discussions</title>
+</head>
+<body>
+    <img class="header-image" src="{% static './backdrop.png' %}" alt="image">
+    <div class="container">
+        <div class="sys-admin-box">
+            <div class="sys-admin">
+                <div style="display: flex;
+                margin-top: 30px;
+                margin-bottom: 30px;
+                padding: 2%;
+                background-color: #ffc5d8;
+                border-radius: 10px;
+                box-shadow: 2px 2px 12px #ff76a373;">
+                    <img style="width: 10%; object-fit: contain;" src="{% static './sys_admin.png' %}" alt="user">
+                    <div class="message">
+                        <b>How can I get my credit scores?</b>
+                        <br>
+                        You are entitled to a free credit report once a year from the three major credit bureaus, but you will generally have to pay a fee to receive your credit score. Some lenders, such as credit card companies, may provide a credit score for free. There are certain instances when you are entitled to your free credit score—for example, if you are denied a loan based on your credit score. It could also be that one of your lenders, such as your credit card company, participates in a program that provides free FICO scores on your statements.
+                    </div>
+                </div>
+                <div style="text-align: start; margin-left: 1%">
+                    {{message.author}}
+                </div>
+                <div style="text-align: end;">
+                    {{message.time}}
+                </div>
+            </div>
+        </div>
+        <hr style="margin-bottom: 30px;">
+        {% for message in messages %}
+            {% if author != message.author %}
+            <div class="message-box-other">
+                <div class="mess-other">
+                    <div style="display: flex;">
+                        <img style="width: 7%; object-fit: contain;" src="{% static './user_trans.png' %}" alt="user">
+                        <div class="message">
+                            {{message.text}}
+                        </div>
+                    </div>
+                    <div style="text-align: start; margin-left: 1%">
+                        {{message.author}}
+                    </div>
+                    <div style="text-align: end;">
+                        {{message.time}}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="message-box-user">
+                <div class="mess-user">
+                    <div style="display: flex;">
+                        <img style="width: 7%; object-fit: contain;" src="{% static './user_trans.png' %}" alt="user">
+                        <div class="message">
+                            {{message.text}}
+                        </div>
+                    </div>
+                    <div style="text-align: start; margin-left: 1%">
+                        {{message.author}}
+                    </div>
+                    <div style="text-align: end;">
+                        {{message.time}}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="mess-box">
+        <form action="" method="post">{% csrf_token %}
+            <input class="comment-box" type="text" name="chat-message" id="mb">
+            <input class="post-btn" type="submit" value="Post Comment">
+        </form>
+    </div>
+</body>
+</html>
