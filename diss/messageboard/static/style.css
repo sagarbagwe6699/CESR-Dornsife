@@ -61,9 +61,9 @@
             background-color: #ffffff;
             padding: 3% 2%;
             margin: 1%;
-            width: 70%;
+            /* width: 70%; */
             border-radius: 10px;
-            box-shadow: 2px 2px 6px #b6b6b6;
+            /* box-shadow: 2px 2px 6px #b6b6b6; */
         }
 
 form{
