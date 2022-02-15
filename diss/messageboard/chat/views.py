@@ -13,8 +13,8 @@ def discussions(request):
                 "d96ce3-378a38-947f4b-f0554c-a97d4a": "Avril",
                 "3e3e5e-42e9d8-49dc10-9dfe50-2fdca1": "Juan",
                 "5055ad-e0aa26-3e499a-964d81-80e4f8": "Jorge",
-                "5055ad-e0aa26-3e499a-964d81-80e4f8": "Luisa B.",
-                "5055ad-e0aa26-3e499a-964d81-80e4f8": "Patricia D."
+                "5055ad-e0aa26-3e499a-964d81-80e4gg": "Luisa B.",
+                "5055ad-e0aa26-3e499a-964d81-80e4ss": "Patricia D."
                 }
     messages = usermessage.objects.all()
     id_ = request.GET.get('user')
