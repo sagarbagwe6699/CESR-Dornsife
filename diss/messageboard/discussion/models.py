@@ -15,3 +15,13 @@ class Thread(models.Model):
 
     def __str__(self):
         return '{} - {}'.format(self.week, self.topic)
+
+
+class ChatMessage(models.Model):
+    author = models.CharField(max_length=30)
+    week = models.CharField(max_length=100, null=True)
+    message = models.TextField()
+    time_stamp = models.DateField()
+
+    def __str__(self):
+        return 'Week -> {} | Author -> {} | Message -> {}...'.format(self.week, self.author, self.message[:20])

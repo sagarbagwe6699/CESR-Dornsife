@@ -1,4 +1,3 @@
-from tkinter.tix import DisplayStyle
 from django.urls import path
 from .views import HomeView, DiscussionDetail
 from . import views

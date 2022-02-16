@@ -1,10 +1,11 @@
+from calendar import week
 from pyexpat import model
 from re import template
 from statistics import mode
 from threading import Thread
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
-from .models import Thread
+from .models import ChatMessage, Thread
 from django.http import HttpResponse, HttpResponseRedirect
 import json
 from datetime import date
@@ -51,15 +52,25 @@ def DetailDiscussion(request, pk=None, user_id=None):
                 }
     res = Thread.objects.get(id=pk)
     topic = res.topic
-    res = json.loads(res.messages.replace("\'", "\""))
+    # res = json.loads(res.messages.replace("\'", "\""))
     author = mappings[user_id]
+    m = ChatMessage.objects.filter(week=res.week)
 
     if request.method == 'POST':
         text = request.POST.get('chat-message', '')
-        res.append({"message": text, "author": author,
-                   "timestamp": date.today().strftime("%B %d, %Y")})
         if text != '':
-            Thread.objects.filter(id=pk).update(messages=res)
+            m = ChatMessage()
+            m.message = text
+            m.week = res.week
+            m.author = author if author else 'Untitled'
+            m.time_stamp = date.today()
+            m.save()
             return HttpResponseRedirect('{}'.format(user_id))
+        # text = request.POST.get('chat-message', '')
+        # res.append({"message": text, "author": author,
+        #            "timestamp": date.today().strftime("%B %d, %Y")})
+        # if text != '':
+        #     Thread.objects.filter(id=pk).update(messages=res)
+        #     return HttpResponseRedirect('{}'.format(user_id))
 
-    return render(request, 'discussion_detail.html', {"messages": res, "author": author, "user_id": user_id, "topic": topic})
+    return render(request, 'discussion_detail.html', {"messages": m, "author": author, "user_id": user_id, "topic": topic})
