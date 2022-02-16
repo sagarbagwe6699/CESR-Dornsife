@@ -37,7 +37,7 @@
             <div>
                 {{post.topic}}
             </div>
-            <a href="{% url 'discussion-detail' post.pk user_id%}">
+            <a href="{% url 'discussion-detail' post.primary_key user_id%}">
                 <button style="border: none;
                 margin-top: 20px;
                 padding: 6px 30px;

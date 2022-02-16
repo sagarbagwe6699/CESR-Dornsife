@@ -9,6 +9,7 @@ from .models import ChatMessage, Thread
 from django.http import HttpResponse, HttpResponseRedirect
 import json
 from datetime import date
+import re
 
 # Create your views here.
 
@@ -40,7 +41,7 @@ class DiscussionDetail(DetailView):
     template_name = 'discussion_detail.html'
 
 
-def DetailDiscussion(request, pk=None, user_id=None):
+def DetailDiscussion(request, primary_key=None, user_id=None):
     mappings = {"39cb93-8411cd-b2381b-e3aaa4-b9d710": "Gema",
                 "777ec0-4c1213-877b87-35d594-15e5ea": "Jose",
                 "88aacd-618237-45de4d-dcc784-a74ce9": "Maria P.",
@@ -50,8 +51,10 @@ def DetailDiscussion(request, pk=None, user_id=None):
                 "5055ad-e0aa26-3e499a-964d81-80e4gg": "Luisa B.",
                 "5055ad-e0aa26-3e499a-964d81-80e4ss": "Patricia D."
                 }
-    res = Thread.objects.get(id=pk)
+    res = Thread.objects.get(primary_key=primary_key)
     topic = res.topic
+    link_text = res.inforgraphic_text
+    link = res.infographic_link
     # res = json.loads(res.messages.replace("\'", "\""))
     author = mappings[user_id]
     m = ChatMessage.objects.filter(week=res.week)
@@ -60,7 +63,9 @@ def DetailDiscussion(request, pk=None, user_id=None):
         text = request.POST.get('chat-message', '')
         if text != '':
             m = ChatMessage()
-            m.message = text
+            r = re.compile(r"(https://[^ ]+)")
+            print(r.sub(r'<a href="\1">\1</a>', text))
+            m.message = r.sub(r'<a href="\1">\1</a>', text)
             m.week = res.week
             m.author = author if author else 'Untitled'
             m.time_stamp = date.today()
@@ -73,4 +78,4 @@ def DetailDiscussion(request, pk=None, user_id=None):
         #     Thread.objects.filter(id=pk).update(messages=res)
         #     return HttpResponseRedirect('{}'.format(user_id))
 
-    return render(request, 'discussion_detail.html', {"messages": m, "author": author, "user_id": user_id, "topic": topic})
+    return render(request, 'discussion_detail.html', {"messages": m, "author": author, "user_id": user_id, "topic": topic, "link_text": link_text, "link": link})

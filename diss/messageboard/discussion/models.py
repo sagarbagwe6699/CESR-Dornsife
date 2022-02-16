@@ -1,13 +1,18 @@
 from multiprocessing import AuthenticationError
+from statistics import mode
 from django.db import models
 
 # Create your models here.
 
 
 class Thread(models.Model):
+    primary_key = models.IntegerField(default=1)
     week = models.CharField(max_length=100)
     topic = models.CharField(max_length=2000)
     messages = models.TextField(null=True)
+    inforgraphic_text = models.TextField(
+        default='Acceso a Infografía de esta semana', max_length=255, null=True, blank=True)
+    infographic_link = models.TextField(default='', null=True, blank=True)
     # A message will have:
     #     1. Author
     #     2. Message

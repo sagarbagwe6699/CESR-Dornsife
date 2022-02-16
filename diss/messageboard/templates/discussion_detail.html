@@ -20,8 +20,33 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400&display=swap" rel="stylesheet">
     <title>Discussions</title>
+    <script>
+        function showModal(){
+            var m = document.getElementById('myModal')
+            m.style.display = 'block'
+        }
+        function closeModal(){
+            var m = document.getElementById('myModal')
+            m.style.display = 'none'
+        }
+    </script>
 </head>
 <body>
+    <!-- The Modal -->
+    <div id="myModal" class="modal" style="display: none;">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div style="display: flex; justify-content: center;">
+            <div>
+                <img src="{{link}}" alt="infographic">
+            </div>
+        </div>
+        </div>
+    
+    </div>
+
     <img class="header-image" src="
     {% static './backdrop.png' %}" alt="image">
     <div class="container">
@@ -43,23 +68,36 @@
         <hr style="margin-top: 30px;">
         <div class="sys-admin-box">
             <div class="sys-admin">
-                <div style="display: flex;
-                margin-top: 30px;
+                <div style="margin-top: 30px;
                 margin-bottom: 30px;
                 padding: 2%;
                 background-color: #ffc5d8;
                 border-radius: 10px;
                 box-shadow: 2px 2px 12px #ff76a373;">
+                    <div style="display: flex;">
                     <img style="width: 10%; object-fit: contain;" src="{% static './sys_admin.png' %}" alt="user">
                     <div class="message">
                         {{topic}}
                     </div>
-                </div>
-                <div style="text-align: start; margin-left: 1%">
-                    {{message.author}}
-                </div>
-                <div style="text-align: end;">
-                    {{message.time}}
+                    </div>
+                    <div style="text-align: start; margin-left: 1%">
+                        {{message.author}}
+                    </div>
+                    <div style="text-align: end;">
+                        {{message.time}}
+                    </div>
+                    {% if link != '' %}
+                        <div>
+                            <button style="border: none;
+                            margin-top: 20px;
+                            padding: 6px 30px;
+                            border-radius: 5px;
+                            background-color: #ff95c0;
+                            box-shadow: 1px 1px 6px #ff88af;" onclick="showModal()">
+                                {{link_text}}
+                            </button>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -71,7 +109,7 @@
                     <div style="display: flex;">
                         <img style="width: 7%; object-fit: contain;" src="{% static './user-5.png' %}" alt="user">
                         <div class="message">
-                            {{message.message}}
+                            {% autoescape off %}{{ message.message }}{% endautoescape %}
                         </div>
                     </div>
                     <div style="text-align: start; margin-left: 1%">
@@ -88,7 +126,7 @@
                     <div style="display: flex;">
                         <img style="width: 7%; object-fit: contain;" src="{% static './user-4.png' %}" alt="user">
                         <div class="message">
-                            {{message.message}}
+                            {% autoescape off %}{{ message.message }}{% endautoescape %}
                         </div>
                     </div>
                     <div style="text-align: start; margin-left: 1%">
