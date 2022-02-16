@@ -1,3 +1,12 @@
+<!-- {% for message in messages %}
+    {{message.message}}
+{% endfor %} -->
+
+<!-- <form action="" method="post">{% csrf_token %}
+    <input class="comment-box" type="text" name="chat-message" id="mb">
+    <input class="post-btn" type="submit" value="Post Comment">
+</form> -->
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -13,8 +22,25 @@
     <title>Discussions</title>
 </head>
 <body>
-    <img class="header-image" src="{% static './backdrop.png' %}" alt="image">
+    <img class="header-image" src="
+    {% static './backdrop.png' %}" alt="image">
     <div class="container">
+        <div style="display: flex; justify-content: center;">
+            <div style="width: 40%;">
+                <a href="/?user={{ user_id }}">
+                    <button style="    width: 100%;
+                    border: none;
+                    background-color: #cbcbcb;
+                    padding: 8px;
+                    border-radius: 5px;
+                    box-shadow: 1px 1px 5px #cdcdcd;
+                    margin-top: 25px;">
+                        Go back
+                    </button>
+                </a>
+            </div>
+        </div>
+        <hr style="margin-top: 30px;">
         <div class="sys-admin-box">
             <div class="sys-admin">
                 <div style="display: flex;
@@ -26,9 +52,7 @@
                 box-shadow: 2px 2px 12px #ff76a373;">
                     <img style="width: 10%; object-fit: contain;" src="{% static './sys_admin.png' %}" alt="user">
                     <div class="message">
-                        <b>How can I get my credit scores?</b>
-                        <br>
-                        You are entitled to a free credit report once a year from the three major credit bureaus, but you will generally have to pay a fee to receive your credit score. Some lenders, such as credit card companies, may provide a credit score for free. There are certain instances when you are entitled to your free credit score—for example, if you are denied a loan based on your credit score. It could also be that one of your lenders, such as your credit card company, participates in a program that provides free FICO scores on your statements.
+                        {{topic}}
                     </div>
                 </div>
                 <div style="text-align: start; margin-left: 1%">
@@ -45,16 +69,16 @@
             <div class="message-box-other">
                 <div class="mess-other">
                     <div style="display: flex;">
-                        <img style="width: 7%; object-fit: contain;" src="{% static './user_trans.png' %}" alt="user">
+                        <img style="width: 7%; object-fit: contain;" src="{% static './user-5.png' %}" alt="user">
                         <div class="message">
-                            {{message.text}}
+                            {{message.message}}
                         </div>
                     </div>
                     <div style="text-align: start; margin-left: 1%">
                         {{message.author}}
                     </div>
                     <div style="text-align: end;">
-                        {{message.time}}
+                        {{message.timestamp}}
                     </div>
                 </div>
             </div>
@@ -62,16 +86,16 @@
             <div class="message-box-user">
                 <div class="mess-user">
                     <div style="display: flex;">
-                        <img style="width: 7%; object-fit: contain;" src="{% static './user_trans.png' %}" alt="user">
+                        <img style="width: 7%; object-fit: contain;" src="{% static './user-4.png' %}" alt="user">
                         <div class="message">
-                            {{message.text}}
+                            {{message.message}}
                         </div>
                     </div>
                     <div style="text-align: start; margin-left: 1%">
                         {{message.author}}
                     </div>
                     <div style="text-align: end;">
-                        {{message.time}}
+                        {{message.timestamp}}
                     </div>
                 </div>
             </div>

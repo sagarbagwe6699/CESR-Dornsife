@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400&display=swap" rel="stylesheet">
+    <title>Discussions</title>
+    <script>
+        function update_user_id(){
+            var user_id = document.getElementById('user-id').innerHTML
+            localStorage.setItem('user_id', user_id)
+        }
+    </script>
+</head>
+<body onload="update_user_id()">
+    <div style="padding: 20px; text-align: center; font-size: 2em;" >
+        Discussions
+    </div>
+    <div style="margin: auto; width: 80%; display: flex; flex-direction: column;" >
+        <div>
+            {% for post in object_list %}
+            <div style="padding: 20px;
+            background-color: #ffd4d4eb;
+            box-shadow: 2px 2px 8px #ff5f5f63;
+            border-radius: 5px; margin: 10px;">
+            <div style="font-weight: bold;
+            font-size: 1.3em;
+            margin-bottom: 10px;" >
+                {{post.week}}
+            </div>
+            <div>
+                {{post.topic}}
+            </div>
+            <a href="{% url 'discussion-detail' post.pk user_id%}">
+                <button style="border: none;
+                margin-top: 20px;
+                padding: 6px 30px;
+                border-radius: 5px;
+                background-color: #ffb2b2;
+                box-shadow: 1px 1px 6px #ff8d8d;" >Go to discussion</button>
+            </a>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    <span id="user-id" style="display: none;">{{user_id}}</span>
+</body>
+</html>
